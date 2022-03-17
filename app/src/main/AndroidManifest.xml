@@ -10,9 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyAssistant">
         <activity
+            android:name=".EventEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".CalendarActivity"
-            android:label = "CalendarActivity">
-        </activity>
+            android:label="CalendarActivity"></activity>
         <activity
             android:name=".LoginActivity"
             android:exported="true">
