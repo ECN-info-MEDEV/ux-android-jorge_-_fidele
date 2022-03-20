@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         String UserName = mUserNameView.getText().toString();
         String Pwd = mPasswordView.getText().toString();
 
-        if(UserName.equalsIgnoreCase("Suraj") && Pwd.equals("Suraj@123")){
+        if(UserName.equalsIgnoreCase("a@b.com") && Pwd.equals("1234")){
             Intent MainIntent = new Intent(LoginActivity.this, CalendarActivity.class);
             startActivity(MainIntent);
             Toast.makeText(LoginActivity.this,"You are Sign in Successfuly.", Toast.LENGTH_LONG).show();
