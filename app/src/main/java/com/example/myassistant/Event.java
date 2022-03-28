@@ -2,6 +2,7 @@ package com.example.myassistant;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class Event {
 
@@ -11,7 +12,6 @@ public class Event {
     private LocalTime realStartTime;
     private LocalTime expectedEndTime;
     private LocalTime realEndTime;
-    private LocalTime time;
 
 
     public Event(String name, LocalDate date, LocalTime expectedStartTime, LocalTime expectedEndTime) {
@@ -19,6 +19,22 @@ public class Event {
         this.date = date;
         this.expectedStartTime = expectedStartTime;
         this.expectedEndTime = expectedEndTime;
+    }
+
+
+    public static ArrayList<Event> eventsList = new ArrayList<>();
+
+    public static ArrayList<Event> eventsForDate(LocalDate date)
+    {
+        ArrayList<Event> events = new ArrayList<>();
+
+        for(Event event : eventsList)
+        {
+            if(event.getDate().equals(date))
+                events.add(event);
+        }
+
+        return events;
     }
 
     public void setExpectedStartTime(LocalTime expectedStartTime) {
@@ -35,14 +51,6 @@ public class Event {
 
     public void setRealEndTime(LocalTime realEndTime) {
         this.realEndTime = realEndTime;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
     }
 
     public String getName() {
