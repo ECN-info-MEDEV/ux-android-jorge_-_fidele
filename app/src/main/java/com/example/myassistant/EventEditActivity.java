@@ -1,11 +1,14 @@
 package com.example.myassistant;
 
+import static androidx.core.content.PackageManagerCompat.LOG_TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,10 +16,14 @@ import android.widget.TimePicker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class EventEditActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = EventEditActivity.class.getSimpleName();
 
     EditText eventNameET;
     TextView dateTV,timeTV1,timeTV2;
@@ -28,6 +35,8 @@ public class EventEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
         initWidgets();
+        //Log.println(CalendarUtils.selectedDate)
+        Log.d(LOG_TAG, "Event Activity CREATEEEDD!");
         /// Set the dateView
         dateTV.setText("Date: " + CalendarUtils.formattedDate(CalendarUtils.selectedDate));
         ///Set the view for the time
@@ -51,17 +60,17 @@ public class EventEditActivity extends AppCompatActivity {
                                 );
                                 try {
                                     Date date=f24h.parse(time);
-                                    SimpleDateFormat f12h= new SimpleDateFormat(
-                                            "hh:mm aa"
-                                    );
-                                    timeTV1.setText(f12h.format(date));
+//                                    SimpleDateFormat f12h= new SimpleDateFormat(
+//                                            "hh:mm aa"
+//                                    );
+                                    timeTV1.setText(f24h.format(date));
                                 }
                                 catch (ParseException e){
                                     e.printStackTrace();
 
                                 }
                             }
-                        },12,0,false
+                        },24,0,true
                 );
                 //Set transparent background
                 tPD.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -94,17 +103,18 @@ public class EventEditActivity extends AppCompatActivity {
                                 );
                                 try {
                                     Date date=f24h.parse(time);
-                                    SimpleDateFormat f12h= new SimpleDateFormat(
+                                   /* SimpleDateFormat f12h= new SimpleDateFormat(
                                             "hh:mm aa"
-                                    );
-                                    timeTV2.setText(f12h.format(date));
+                                    );*/
+
+                                    timeTV2.setText(f24h.format(date));
                                 }
                                 catch (ParseException e){
                                     e.printStackTrace();
 
                                 }
                             }
-                        },12,0,false
+                        },24,0,true
                 );
                 //Set transparent background
                 tPD.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -122,13 +132,21 @@ public class EventEditActivity extends AppCompatActivity {
     private void initWidgets()
     {
         eventNameET = findViewById(R.id.event_name);
+        dateTV=findViewById(R.id.eventDateTV);
         timeTV1=findViewById(R.id.tv_timer1);
         timeTV2=findViewById(R.id.tv_timer2);
+
     }
 
     public void saveEvent(View view)
     {
         String eventName = eventNameET.getText().toString();
+        String StartTimeStr =timeTV1.getText().toString();
+
+        String EndTimeStr = timeTV1.getText().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm");
+        StartTime= LocalTime.parse(StartTimeStr);
+        EndTime=LocalTime.parse(EndTimeStr);
         Event newEvent = new Event(eventName, CalendarUtils.selectedDate, StartTime,EndTime);
         Event.eventsList.add(newEvent);
         finish();

@@ -46,6 +46,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     {
         calendarRecyclerView=findViewById(R.id.calendarRecyclerView);
         monthYearText=findViewById(R.id.monthYearTV);
+        eventListView = findViewById(R.id.eventListView);
     }
 
 
@@ -101,10 +102,24 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         {
             CalendarUtils.selectedDate = date;
             //setMonthView();
-            setMonthView();
+            setWeekView();
         }
 
     }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        setEventAdpater();
+    }
+
+    private void setEventAdpater()
+    {
+        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
+        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        eventListView.setAdapter(eventAdapter);
+    }
+
     public void newEventAction(View view)
     {
         startActivity(new Intent(this, EventEditActivity.class));

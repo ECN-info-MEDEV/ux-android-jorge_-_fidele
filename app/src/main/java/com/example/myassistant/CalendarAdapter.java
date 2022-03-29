@@ -1,5 +1,6 @@
 package com.example.myassistant;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         final LocalDate date = daysOfMonth.get(position);
 
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
+        if(date.equals(CalendarUtils.selectedDate))
+            holder.parentView.setBackgroundColor(Color.LTGRAY);
 
 
         //holder.dayOfMonth.setText(daysOfMonth.get(position));
